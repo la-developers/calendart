@@ -933,7 +933,9 @@ class _Calendar extends StatelessWidget {
       final type = date.isBefore(displayDate)
           ? DayType.extraLow
           : date.month == displayDate.month
-              ? date == today ? DayType.today : DayType.current
+              ? date == today
+                  ? DayType.today
+                  : DayType.current
               : DayType.extraHigh;
 
       return dayBuilder(context, parameters, date, type, column, row);
@@ -1143,8 +1145,14 @@ class CalendarState extends State<Calendar>
         parameters.dayBuilder(context, parameters, date, type, column, row);
     final month = date.month +
         (type == DayType.extraLow
-            ? date.month == 12 ? -11 : 1
-            : type == DayType.extraHigh ? date.month == 1 ? 11 : -1 : 0);
+            ? date.month == 12
+                ? -11
+                : 1
+            : type == DayType.extraHigh
+                ? date.month == 1
+                    ? 11
+                    : -1
+                : 0);
     if (!(selection is CalendarNoneSelection)) {
       day = ((modifiableSelection?.isSingle ?? true)
           ? parameters.singleSelectionBuilder
@@ -1339,7 +1347,9 @@ class _SnapScrollPhysics extends ScrollPhysics {
     final target = (position.pixels / itemSize +
                 ((velocity < -tolerance.velocity)
                     ? -0.5
-                    : velocity > tolerance.velocity ? 0.5 : 0))
+                    : velocity > tolerance.velocity
+                        ? 0.5
+                        : 0))
             .roundToDouble() *
         itemSize;
     return target == position.pixels
